@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="app">
+        <h1>{{  message}}</h1>
+
+        <input type="text" v-model="newItem">
+        <button type="submit" @click= 'add'>Add</button>
+        
+       <ul>
+           <li v-for= "(items,index) in listItems">
+               {{items.name}} 
+               <button @click= 'remove(index)'>X</button>
+           </li>
+       </ul>
+
+    </div>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script>
+        var myObject = new Vue({
+            el: '#app',
+            data: {
+                message: 'ToDo List',
+                listItems: [
+                    {'name': 'Go to market'},
+                    {'name': 'Buy  Apples '},
+                    {'name': 'Some veges'},
+                    {'name': 'Back to home'},
+                ],
+                newItem:'',
+               
+            },
+            methods: {
+                add(){
+                    this.listItems.push({'name':this.newItem})
+                    this.newItem= null
+                },
+                remove(index){
+                    this.listItems.splice(index,1)
+                }
+                
+            }
+
+        });
+    </script>
+</body>
+</html>
