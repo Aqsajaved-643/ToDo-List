@@ -4,50 +4,81 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <title>Document</title>
+
+    <style>
+         .container{
+            width: 500px;
+            height: 500px;
+            /* background-color: bisque;  */
+        }
+        .main{
+          /* width: 450px; */
+          height: 160px;
+           background-color: rgb(188, 208, 224);
+           color: white;
+           margin-top: 50px;
+           border-radius: 4px;
+           
+        }
+        .done {
+          text-decoration: line-through;
+          color: lightgrey;
+       }
+        
+    </style> 
 </head>
 <body>
 
-    <div id="app">
-        <h1>{{  message}}</h1>
-
-        <input type="text" v-model="newItem">
-        <button type="submit" @click= 'add'>Add</button>
-        
-       <ul>
-           <li v-for= "(items,index) in listItems">
-               {{items.name}} 
-               <button @click= 'remove(index)'>X</button>
-           </li>
-       </ul>
-
-    </div>
+    <div id="app" class="container">
+        <div class="main ">
+            <h1 class="p-2"> {{ message}}</h1>
+            <button type="submit" @click='add' class="btn btn-primary rounded-circle mt-5 mr-5 float-right ">
+                <i class="far fa-plus"></i>
+            </button>
+        </div>
     
+        <ul class="list-group w-100 ">
+            <input type="text" placeholder="Add todos....." v-model="newItem" class="form-control" style="height:70px;" >
+    
+            <li v-for="(items,index) in listItems" class="list-group-item">
+                <input type="checkbox" v-model="items.done" aria-label="Checkbox for following text input">
+                <span :class="{done: items.done}">{{items.name}}</span>
+                <button class="btn btn-light float-right" @click="remove(index)">X</button>
+            </li>
+        </ul>
+    
+    </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
     <script>
         var myObject = new Vue({
             el: '#app',
             data: {
-                message: 'ToDo List',
+                message: 'Tasks',
+               
                 listItems: [
-                    {'name': 'Go to market'},
-                    {'name': 'Buy  Apples '},
-                    {'name': 'Some veges'},
-                    {'name': 'Back to home'},
+                    {'name': 'Walk Outside'},
+                    {'name': 'Bake a cake '},
+                    {'name': 'Buy coffee' },
+                    
                 ],
                 newItem:'',
                
             },
             methods: {
                 add(){
-                    this.listItems.push({'name':this.newItem})
-                    this.newItem= null
+                    this.listItems.push({'name':this.newItem,
+                     "done": false
+                });
+                    this.newItem= null;
                 },
                 remove(index){
                     this.listItems.splice(index,1)
-                }
-                
+                },    
             }
 
         });
